@@ -1,0 +1,16 @@
+{
+    "name": "weida/oauth2-core",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Weida\\Oauth2Core\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sgenmi",
+            "email": "sgenmi@gmail.com"
+        }
+    ],
+    "require": {}
+}
