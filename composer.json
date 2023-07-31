@@ -12,5 +12,7 @@
             "email": "sgenmi@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.7"
+    }
 }
