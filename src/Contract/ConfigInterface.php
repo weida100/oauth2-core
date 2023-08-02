@@ -11,4 +11,8 @@ namespace Weida\Oauth2Core\Contract;
 interface ConfigInterface
 {
 
+    public function set(string $key, mixed $val): void;
+    public function get(string $key, mixed $default = ''): mixed;
+    public function has(string $key): bool;
+
 }
