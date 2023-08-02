@@ -12,8 +12,55 @@ use Weida\Oauth2Core\Contract\UserInterface;
 
 class User implements UserInterface
 {
-    public function __construct()
+    private array $attributes=[];
+    public function __construct(array $attributes)
     {
+        $this->attributes = $attributes;
     }
 
+    public function getId(): string
+    {
+       return $this->getOpenId();
+    }
+
+    public function getOpenId(): string
+    {
+       return $this->attributes['openid']??'';
+    }
+
+    public function getNickname(): string
+    {
+        return $this->attributes['nickname']??'';
+    }
+
+    public function getName(): string
+    {
+        return $this->attributes['name']??'';
+    }
+
+    public function getEmail(): string
+    {
+        return $this->attributes['name']??'';
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->attributes['avatar']??'';
+    }
+
+    public function map(array $attributes): static
+    {
+       return $this->setAttribute($attributes);
+    }
+
+    public function setAttribute(array $attributes): static
+    {
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    public function getAttribute(): array
+    {
+        return $this->attributes;
+    }
 }

@@ -10,5 +10,14 @@ namespace Weida\Oauth2Core\Contract;
 
 interface UserInterface
 {
+    public function getId():string;
+    public function getOpenId():string;
+    public function getNickname():string;
+    public function getName():string;
+    public function getEmail():string;
+    public function getAvatar():string;
+    public function map(array $attributes):static;
+    public function setAttribute(array $attributes):static;
+    public function getAttribute():array;
 
 }
