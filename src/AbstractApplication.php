@@ -30,25 +30,27 @@ abstract class AbstractApplication implements Oauth2Interface
         $this->config = new Config($config);
     }
 
-    /**
-     * @return UserInterface
-     * @author Weida
-     */
-    public function userFromCode(string $code):UserInterface{
-        $this->getConfig()->set('code',$code);
-        $tokenArr = $this->tokenFromCode($code);
-        return $this->userFromToken($tokenArr['access_token']);
-    }
+
+
+
 
     /**
-     * @return UserInterface
+     * @return array
+     * @throws Throwable
      * @author Weida
      */
-    public function userFromToken(string $accessToken): UserInterface
+    public function tokenFromCode(string $conde): array
     {
-        $url = $this->getUserInfoUrl($accessToken,$openid);
-        //明天继续
-
+        $url =  $this->getTokenUrl($conde);
+        $resp = $this->getHttpClient()->request('GET',$url);
+        if($resp->getStatusCode()!=200){
+            throw new RuntimeException('Request access_token exception');
+        }
+        $arr = json_decode($resp->getBody()->getContents(),true);
+        if (empty($arr['access_token'])) {
+            throw new RuntimeException('Failed to get access_token: ' . json_encode($arr, JSON_UNESCAPED_UNICODE));
+        }
+        return $arr;
     }
 
 
@@ -60,8 +62,6 @@ abstract class AbstractApplication implements Oauth2Interface
     {
         return $this->getAuthUrl();
     }
-
-
 
     /**
      * @return ConfigInterface
@@ -93,6 +93,11 @@ abstract class AbstractApplication implements Oauth2Interface
             $this->httpClient = new Client([]);
         }
         return $this->httpClient;
+    }
+
+    public function setHttpClient(HttpClientInterface|ClientInterface $httpClient):static {
+        $this->httpClient = $httpClient;
+        return $this;
     }
 
     /**
@@ -146,11 +151,11 @@ abstract class AbstractApplication implements Oauth2Interface
 
     abstract protected function getAuthUrl():string;
 
-    abstract public function getTokenUrl():string;
+    abstract protected function getTokenUrl(string $code):string;
 
-    abstract protected function getUserInfoUrl(string $accessToken,string $openid=''):string;
-
-    abstract public function getUserByToken():string;
+    abstract protected function getUserInfoUrl(string $accessToken):string;
+    //为了兼容
+    abstract public function getUserByToken(string $accessToken):UserInterface;
 
 
 }
