@@ -149,13 +149,21 @@ abstract class AbstractApplication implements Oauth2Interface
         return $this;
     }
 
+    /**
+     * @param string $accessToken
+     * @return UserInterface
+     * @throws GuzzleException
+     * @author Weida
+     */
+    public function getUserByToken(string $accessToken): UserInterface
+    {
+        return $this->userFromToken($accessToken);
+    }
+
     abstract protected function getAuthUrl():string;
 
     abstract protected function getTokenUrl(string $code):string;
 
     abstract protected function getUserInfoUrl(string $accessToken):string;
-    //为了兼容
-    abstract public function getUserByToken(string $accessToken):UserInterface;
-
 
 }
