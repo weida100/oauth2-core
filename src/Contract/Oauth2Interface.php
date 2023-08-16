@@ -14,8 +14,8 @@ interface Oauth2Interface
 {
     public function getConfig():ConfigInterface;
     public function getHttpClient():HttpClientInterface|ClientInterface;
-    public function userFromToken():UserInterface;
-    public function userFromCode():UserInterface;
+    public function userFromToken(string $accessToken):UserInterface;
+    public function userFromCode(string $code):UserInterface;
     public function redirect():string;
-    public function tokenFromCode():array;
+    public function tokenFromCode(string $code):array;
 }
