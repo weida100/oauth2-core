@@ -25,7 +25,7 @@ class User implements UserInterface
 
     public function getOpenId(): string
     {
-       return $this->attributes['openid']??'';
+       return $this->attributes['uid']??'';
     }
 
     public function getNickname(): string
@@ -40,7 +40,7 @@ class User implements UserInterface
 
     public function getEmail(): string
     {
-        return $this->attributes['name']??'';
+        return $this->attributes['email']??'';
     }
 
     public function getAvatar(): string
