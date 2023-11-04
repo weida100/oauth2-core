@@ -25,23 +25,24 @@ abstract class AbstractApplication implements Oauth2Interface
     protected string $state="";
 
 
-    public function __construct(array $config )
+    public function __construct(array|ConfigInterface $config )
     {
-        $this->config = new Config($config);
+        if(is_array($config)){
+            $this->config = new Config($config);
+        }else{
+            $this->config = $config;
+        }
     }
 
-
-
-
-
     /**
+     * @param string $code
      * @return array
-     * @throws Throwable
+     * @throws GuzzleException
      * @author Weida
      */
-    public function tokenFromCode(string $conde): array
+    public function tokenFromCode(string $code): array
     {
-        $url =  $this->getTokenUrl($conde);
+        $url =  $this->getTokenUrl($code);
         $resp = $this->getHttpClient()->request('GET',$url);
         if($resp->getStatusCode()!=200){
             throw new RuntimeException('Request access_token exception');
