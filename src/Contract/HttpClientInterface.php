@@ -8,9 +8,11 @@ declare(strict_types=1);
 
 namespace Weida\Oauth2Core\Contract;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 
 interface HttpClientInterface extends ClientInterface
 {
+    public function getClient():Client;
 
 }
